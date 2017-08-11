@@ -7,6 +7,15 @@ Vue.component('chart', {
             'chartobj': null}
   },
 
+  //Watch "value" degerini izler, "Value"de herangibir değişliklik olduğunda degerleri yeniler
+  'watch': {
+    'value': function() {
+      this.chartobj.data.datasets[0].data[0] = this.value;
+      this.chartobj.data.datasets[0].data[1] = 4095 - this.value;
+      this.chartobj.update();
+    }
+  },
+
   'mounted': function(){
     //this.$el dısardaki divi gösteriyor.children ile icerdeki chart'a ulastik
     this.ctx = this.$el.children[0].getContext('2d');
@@ -38,6 +47,7 @@ var app = new Vue({
     interval: null
   },
 
+  //500 milisaniyede bir fonksiyonun yenilenmesi saglanir.
   'created': function() {
     this.interval = setInterval(this.loadDoc, 500);
   },
@@ -50,9 +60,8 @@ var app = new Vue({
       if (this.readyState == 4 && this.status == 200){
         var obj = JSON.parse(this.responseText);
         //diğer componentse erisim icin $ref kullanıldı.
-        application.$refs.grafik.chartobj.data.datasets[0].data[0] = obj.value;
-        application.$refs.grafik.chartobj.data.datasets[0].data[1] = 4095 - obj.value;
-        application.$refs.grafik.chartobj.update();
+        //value degeri güncellendi
+        application.$refs.grafik.value = obj.value;
       }
     };
     xhttp.open("GET","http://172.22.9.13/api/ao/1/read", true);
