@@ -1,8 +1,16 @@
 Vue.component('chart', {
-  'props': ['charttype', 'percent'],
-  'template': '<div style="width: 256px; height: 256px;"><canvas></canvas></div>',
+  'props': ['charttype'],
+  'template': '\
+      <div class="pie-chart">\
+          <div class="pie-legend">\
+              {{ this.value }} / 4095\
+          </div>\
+          <div style="width: 256px; height: 256px;">\
+              <canvas></canvas>\
+          </div>\
+      </div>',
   'data': function() {
-    return {'value': 30,
+    return {'value': 0,
             'ctx': null,
             'chartobj': null}
   },
@@ -12,26 +20,22 @@ Vue.component('chart', {
     'value': function() {
       this.chartobj.data.datasets[0].data[0] = this.value;
       this.chartobj.data.datasets[0].data[1] = 4095 - this.value;
-      this.chartobj.data.labels[0] = this.value;
-      //this.chartobj.data.labels[1] = 4095 - this.value;
+      // this.chartobj.data.labels[1] = this.value;
+      // this.chartobj.data.labels[1] = 4095 - this.value;
       this.chartobj.update();
     }
   },
 
   'mounted': function(){
     //this.$el dısardaki divi gösteriyor.children ile icerdeki chart'a ulastik
-    this.ctx = this.$el.children[0].getContext('2d');
+    this.ctx = this.$el.children[1].children[0].getContext('2d');
     this.chartobj = new Chart(this.ctx, {
       'type': this.charttype,
       'data': {
         'datasets': [{
           'data': [this.value, 4095-this.value],
-          'backgroundColor': [
-            'purple',
-            '#d4d4d4'
-          ]
-        }],
-        labels: [this.value],
+          'backgroundColor': ['purple', '#eeeeee']
+        }]
       },
       'options': {
         'tooltips':{
