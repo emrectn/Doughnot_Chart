@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="/static/vue.js"></script>
+    <script src="/static/node_modules/chart.js/dist/Chart.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+</head>
+<body>
+    <div id="app">
+
+        <!-- Donut Chart
+        <donut-chart :percent="donutBarValue"></donut-chart><br>
+        Value: <input type="range" min="0" step="1" max="100" v-model="donutBarValue">{% raw %} {{donutbarValue}} {% endraw %}-->
+
+        <chart ref="grafik" charttype="pie"></chart>
+
+
+  </div>
+
+    <script src="/static/myscript.js"></script>
+</body>
+</html>
