@@ -1,6 +1,6 @@
 Vue.component('chart', {
   'props': ['charttype', 'percent'],
-  'template': '<div style="width: 128px; height: 128px;"><canvas></canvas></div>',
+  'template': '<div style="width: 256px; height: 256px;"><canvas></canvas></div>',
   'data': function() {
     return {'value': 30,
             'ctx': null,
@@ -12,6 +12,8 @@ Vue.component('chart', {
     'value': function() {
       this.chartobj.data.datasets[0].data[0] = this.value;
       this.chartobj.data.datasets[0].data[1] = 4095 - this.value;
+      this.chartobj.data.labels[0] = this.value;
+      //this.chartobj.data.labels[1] = 4095 - this.value;
       this.chartobj.update();
     }
   },
@@ -26,9 +28,10 @@ Vue.component('chart', {
           'data': [this.value, 4095-this.value],
           'backgroundColor': [
             'purple',
-            'orange'
+            '#d4d4d4'
           ]
-        }]
+        }],
+        labels: [this.value],
       },
       'options': {
         'tooltips':{
